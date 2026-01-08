@@ -18,6 +18,20 @@ function getComputerChoice() {
 
 function playRound( computerSelection, playerSelection) {
   let dynamicDiv = document.getElementById('feedback');
+  let choiceDisplay = document.getElementById('choice-display');
+
+  // Display choices
+  choiceDisplay.innerHTML = `
+    <div class="choice-box">
+      <div class="choice-label">You chose:</div>
+      <div class="choice-value">${playerSelection}</div>
+    </div>
+    <div class="choice-box">
+      <div class="choice-label">CPU chose:</div>
+      <div class="choice-value">${capitalizeFirstLetter(computerSelection)}</div>
+    </div>
+  `;
+
   switch (true) {
       case computerSelection === "paper" && playerSelection === "Paper":
           dynamicDiv.textContent = "A tie!!!";
@@ -50,6 +64,10 @@ function playRound( computerSelection, playerSelection) {
           dynamicDiv.textContent = "Choose some weapon to fight";
   }
 }
+
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
 let computerCounter = 0;
 let playerCounter = 0;
 
@@ -79,9 +97,34 @@ function endgame(playerCounter, computerCounter){
   let pprBtn = document.getElementById('pprBtn');
   let rckBtn = document.getElementById('rckBtn');
   if(playerCounter === 5 || computerCounter === 5){
-    dynamicDivEnd.textContent = "Game Over Retry?";
+    if(playerCounter === 5){
+      dynamicDivEnd.textContent = "You Won the Game!";
+    } else {
+      dynamicDivEnd.textContent = "CPU Won the Game!";
+    }
     scsBtn.disabled = true;
     rckBtn.disabled = true;
     pprBtn.disabled = true;
   }
+}
+
+function resetGame(){
+  // Reset counters
+  computerCounter = 0;
+  playerCounter = 0;
+
+  // Reset score display
+  document.getElementById('player-score').textContent = '0';
+  document.getElementById('cpu-score').textContent = '0';
+
+  // Reset feedback message
+  document.getElementById('feedback').textContent = "Let´s Start!!!";
+
+  // Clear choice display
+  document.getElementById('choice-display').innerHTML = '';
+
+  // Enable all buttons
+  document.getElementById('scsBtn').disabled = false;
+  document.getElementById('rckBtn').disabled = false;
+  document.getElementById('pprBtn').disabled = false;
 }

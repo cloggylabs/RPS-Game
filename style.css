@@ -16,15 +16,17 @@
 	text-decoration: none;
 	font-family: "Roboto Mono", monospace;
 	color: var(--white);
+	box-sizing: border-box;
 }
 body {
 	width: 100vw;
-	height: 100vh;
+	min-height: 100vh;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
 	align-items: center;
 	background: linear-gradient(180deg, #045929 -12.22%, #01180b 114.1%);
+	overflow-x: hidden;
 }
 #header-div {
 	width: 100%;
@@ -33,16 +35,30 @@ body {
 	justify-content: center;
 }
 #game-header {
-	width: 910px;
-	height: 106.01px;
+	width: min(910px, 90%);
+	height: auto;
+	padding: 30px 20px;
 	background: #048c3f;
 	box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.25);
 	border-radius: 30px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	font-size: 48px;
+	font-size: clamp(24px, 5vw, 48px);
 	margin-top: 40px;
+	text-align: center;
+	animation: slideDown 0.6s ease-out;
+}
+
+@keyframes slideDown {
+	from {
+		opacity: 0;
+		transform: translateY(-30px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
 }
 #main {
 	height: 70%;
@@ -53,12 +69,14 @@ body {
 	flex-direction: column;
 }
 .game-board {
-	width: 800px;
-	height: 670px;
+	width: min(800px, 95%);
+	max-width: 800px;
+	height: auto;
 	display: flex;
 	align-items: center;
 	flex-direction: column;
 	justify-content: flex-start;
+	padding: 20px;
 }
 #main--title {
 	display: flex;
@@ -67,38 +85,94 @@ body {
 }
 #main--title__text {
 	color: var(--green3);
-	font-size: 36px;
+	font-size: clamp(24px, 4vw, 36px);
+	animation: fadeIn 0.8s ease-in;
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
 }
 #weapon-selector {
 	display: flex;
 	align-content: space-between;
 	justify-content: center;
-	margin: 0px 0px;
+	flex-wrap: wrap;
+	gap: 20px;
+	margin: 20px 0;
 }
 .weapons {
 	display: flex;
 	flex-direction: column;
-	margin: 20px;
+	align-items: center;
+	animation: popIn 0.5s ease-out backwards;
+}
+
+.weapons:nth-child(1) {
+	animation-delay: 0.2s;
+}
+.weapons:nth-child(2) {
+	animation-delay: 0.3s;
+}
+.weapons:nth-child(3) {
+	animation-delay: 0.4s;
+}
+
+@keyframes popIn {
+	from {
+		opacity: 0;
+		transform: scale(0.5);
+	}
+	to {
+		opacity: 1;
+		transform: scale(1);
+	}
 }
 
 .weapons img {
+	width: 150px;
+	height: 150px;
+	object-fit: contain;
 	margin-bottom: 20px;
+	transition: transform 0.3s ease;
 }
+
+.weapons:hover img {
+	transform: scale(1.1) rotate(5deg);
+}
+
 .weapons input {
-	padding: 5px 10px;
+	padding: 10px 20px;
 	background: #04401e;
 	border: 0.5px solid #045929;
 	box-shadow: -3px -3px 4px rgba(255, 255, 255, 0.25),
 		3px 3px 6px rgba(0, 0, 0, 0.25);
 	border-radius: 20px;
 	color: var(--green4);
-	font-size: 26px;
-	transition: all 0.1s;
+	font-size: clamp(18px, 3vw, 26px);
+	transition: all 0.3s ease;
 	transform: scale(1);
+	min-width: 120px;
 }
 .weapons input:hover {
 	cursor: pointer;
 	transform: scale(1.05);
+	background: var(--green2);
+	box-shadow: -4px -4px 6px rgba(255, 255, 255, 0.3),
+		4px 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.weapons input:active {
+	transform: scale(0.98);
+}
+
+.weapons input:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
 }
 #score-board {
 	width: 100%;
@@ -106,54 +180,150 @@ body {
 	align-items: center;
 	justify-content: space-around;
 	padding: 20px;
-	margin: 5px 0;
+	margin: 15px 0;
 	border-top: 1px solid var(--green5);
 	border-bottom: 1px solid var(--green5);
+	flex-wrap: wrap;
+	gap: 15px;
 }
 .score-item {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-around;
 	align-items: center;
-	border: 1px solid var(--green5);
+	border: 2px solid var(--green5);
 	border-radius: 25px;
-	width: 207px;
+	width: clamp(150px, 30%, 207px);
 	height: 142px;
+	background: rgba(4, 64, 30, 0.3);
+	transition: all 0.3s ease;
 }
+
+.score-item:hover {
+	transform: translateY(-5px);
+	box-shadow: 0 8px 15px rgba(12, 242, 135, 0.2);
+}
+
 .score-title {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	padding-bottom: 15px;
-	width: 160px;
+	width: 80%;
 	border-bottom: 1px solid var(--green5);
-	font-size: 20px;
+	font-size: clamp(16px, 2.5vw, 20px);
 	color: var(--green3);
 }
 .score {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	font-size: 50px;
+	font-size: clamp(36px, 6vw, 50px);
 	color: var(--green4);
+	font-weight: bold;
+	text-shadow: 0 0 10px rgba(12, 242, 135, 0.5);
 }
 .vs {
-	font-size: 50px;
+	font-size: clamp(36px, 6vw, 50px);
 	color: var(--green4);
+	font-weight: bold;
+	text-shadow: 0 0 15px rgba(12, 242, 135, 0.6);
 }
 .dynamic-container {
-	width: 800px;
+	width: 100%;
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	gap: 20px;
+	margin-top: 20px;
 }
 #feedback {
 	margin-top: 0px;
-	padding: 15px 50px;
+	padding: 15px 40px;
 	background-color: var(--white);
 	color: var(--green1);
-	font-size: 48px;
+	font-size: clamp(24px, 5vw, 48px);
 	border-radius: 25px;
+	text-align: center;
+	animation: pulse 0.5s ease-in-out;
+	box-shadow: 0 4px 15px rgba(189, 234, 213, 0.3);
+}
+
+@keyframes pulse {
+	0%, 100% {
+		transform: scale(1);
+	}
+	50% {
+		transform: scale(1.05);
+	}
+}
+
+#choice-display {
+	display: flex;
+	gap: 30px;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+	margin-top: 20px;
+}
+
+.choice-box {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 10px;
+	padding: 15px;
+	background: rgba(4, 64, 30, 0.5);
+	border: 2px solid var(--green5);
+	border-radius: 20px;
+	min-width: 150px;
+	animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+	from {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.choice-label {
+	font-size: clamp(16px, 2.5vw, 20px);
+	color: var(--green3);
+	font-weight: bold;
+}
+
+.choice-value {
+	font-size: clamp(20px, 3.5vw, 28px);
+	color: var(--green4);
+}
+
+#reset-btn {
+	padding: 12px 30px;
+	background: var(--green3);
+	border: none;
+	border-radius: 20px;
+	color: var(--white);
+	font-size: clamp(16px, 2.5vw, 20px);
+	cursor: pointer;
+	transition: all 0.3s ease;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+	margin-top: 20px;
+}
+
+#reset-btn:hover {
+	background: var(--green5);
+	transform: translateY(-2px);
+	box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+}
+
+#reset-btn:active {
+	transform: translateY(0);
 }
 
 /* footer styles begins here */
@@ -194,4 +364,70 @@ footer {
 #footer-text p {
 	font-family: "Montserrat Alternates", sans-serif;
 	font-size: 15px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+	#game-header {
+		font-size: 24px;
+		padding: 20px 15px;
+		margin-top: 20px;
+	}
+
+	.weapons img {
+		width: 100px;
+		height: 100px;
+	}
+
+	#weapon-selector {
+		gap: 10px;
+	}
+
+	.score-item {
+		width: 140px;
+		height: 120px;
+	}
+
+	#footer-container {
+		width: 90%;
+		flex-direction: column;
+		gap: 15px;
+	}
+
+	.footer-divs {
+		margin: 10px 0;
+	}
+
+	#choice-display {
+		gap: 15px;
+	}
+
+	.choice-box {
+		min-width: 120px;
+		padding: 10px;
+	}
+}
+
+@media (max-width: 480px) {
+	.weapons {
+		margin: 10px 5px;
+	}
+
+	.weapons img {
+		width: 80px;
+		height: 80px;
+	}
+
+	.weapons input {
+		min-width: 90px;
+		padding: 8px 15px;
+	}
+
+	#score-board {
+		padding: 15px 5px;
+	}
+
+	.vs {
+		margin: 0 10px;
+	}
 }
