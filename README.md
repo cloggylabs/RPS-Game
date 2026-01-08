@@ -155,11 +155,10 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ## Author
 
-**Joseloper**
+**Cloggy Labs**
 
-- GitHub: [@jperez331](https://github.com/jperez331)
+- GitHub: [@cloggy](https://github.com/cloggylabs)
 - LinkedIn: [jperez331](https://www.linkedin.com/in/jperez331/)
-- Twitter: [@clotercillo331](https://twitter.com/clotercillo331)
 
 ## Acknowledgments
 
@@ -169,6 +168,6 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ---
 
-Made with ❤️ by Joseloper | 2022
+Made with ❤️ by cloggy | 2022
 
 **Enjoy the game and may the best player win!**
